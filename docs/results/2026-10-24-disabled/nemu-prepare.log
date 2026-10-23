@@ -1,0 +1,59 @@
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/jingyu/workspace/smmpt-demo/build/disabled/nemu/resource/softfloat/repo/.git/
+From https://github.com/ucb-bar/berkeley-softfloat-3
+ * branch            32eb3295a3c814c1551f94ebc29eed1dec3cb3b1 -> FETCH_HEAD
+HEAD is now at 32eb329 Add basic BF16 routines (#45)
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/jingyu/workspace/smmpt-demo/build/disabled/nemu/resource/nanopb/.git/
+From https://github.com/nanopb/nanopb
+ * branch            bb3513956911e19a68a4690534b17d4b1a4d0ce7 -> FETCH_HEAD
+HEAD is now at bb35139 Fix macOS package architecture labels
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/jingyu/workspace/smmpt-demo/build/disabled/nemu/resource/LibCheckpoint/.git/
+From https://github.com/OpenXiangShan/LibCheckpoint
+ * branch            1d8905cc2803c242ef257569128c2e68bf4272aa -> FETCH_HEAD
+HEAD is now at 1d8905c feat: make serial port configurable (#27)
+Submodule 'resource/nanopb' (https://github.com/nanopb/nanopb) registered for path 'resource/nanopb'
+Cloning into '/home/jingyu/workspace/smmpt-demo/build/disabled/nemu/resource/LibCheckpoint/resource/nanopb'...
+Submodule path 'resource/nanopb': checked out '671672b4d7994a9b07a307ae654885c7202ae886'
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/jingyu/workspace/smmpt-demo/build/disabled/nemu/resource/gcpt_restore/.git/
+From https://github.com/OpenXiangShan/LibCheckpointAlpha
+ * branch            5169da768d18f4682a489eaabe7c071df6d6ef88 -> FETCH_HEAD
+HEAD is now at 5169da7 feat: add make nutshell restorer for rv64imac (#14)

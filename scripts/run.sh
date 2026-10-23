@@ -15,6 +15,8 @@ if [[ ! -x "$nemu" || ! -f "$firmware" ]]; then
     echo "Missing artifacts for $mode. Explicit build required: bash scripts/build.sh $mode" >&2
     exit 2
 fi
+# Refuse old or altered artifacts before overwriting any execution logs.
+python3 "$root/scripts/build-record.py" verify "$root" "$out" "$mode"
 # Failures and timeouts retain both logs for inspection.
 timeout "${TIMEOUT:-120}s" "$nemu" -b -I 2000000000 \
     -l "$out/nemu-runtime.log" "$firmware" > "$out/console.log" 2>&1

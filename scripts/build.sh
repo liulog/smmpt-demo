@@ -17,16 +17,16 @@ copy="$out/nemu"
 if [[ "$root" =~ [[:space:]] ]]; then
     echo "OpenSBI requires a checkout path without whitespace" >&2; exit 2
 fi
-for tool in rsync python3 dtc make gcc g++ "${cross}gcc" "${cross}objcopy"; do
+for tool in git rsync python3 dtc make gcc g++ cmp "${cross}gcc" "${cross}objcopy" "${cross}nm"; do
     command -v "$tool" >/dev/null || { echo "Missing tool: $tool" >&2; exit 2; }
 done
 test -f "$root/NEMU/Kconfig"
 test -f "$root/opensbi/include/sbi/sbi_ecall_mpt.h"
 mkdir -p "$out" "$copy"
-# Per-mode copies keep generated NEMU files outside the submodule checkout.
-rsync -a --exclude=.git --exclude=/build --exclude=/include/config \
-    --exclude=/include/generated --exclude=/.config --exclude=/.config.old \
-    "$root/NEMU/" "$copy/"
+python3 "$root/scripts/build-record.py" capture "$root" "$out" "$mode"
+# Synchronize tracked files only; remove stale sources and pin build dependencies.
+python3 "$root/scripts/prepare-nemu.py" "$root/NEMU" "$copy" \
+    "$root/scripts/nemu-deps.json" > "$out/nemu-prepare.log" 2>&1
 python3 - "$copy" "$mpt" <<'PY'
 from pathlib import Path
 import sys
@@ -78,12 +78,26 @@ flags=(-march=rv64imac_zicsr_zifencei -mabi=lp64 -mcmodel=medany -mno-relax
     "$root/payload/start.S" "$root/payload/main.c" -o "$out/payload.elf" \
     > "$out/payload-build.log" 2>&1
 "${cross}objcopy" -O binary "$out/payload.elf" "$out/payload.bin"
-make -C "$root/opensbi" PLATFORM=generic PLATFORM_RISCV_XLEN=64 \
-    O="$out/opensbi" CROSS_COMPILE="$cross" \
-    CONFIG_SBI_ECALL_MPT_DEMO="$option" FW_TEXT_START=0x80000000 \
-    FW_DYNAMIC=n FW_JUMP=n FW_PAYLOAD=y FW_PAYLOAD_OFFSET=0x200000 \
-    FW_FDT_PATH="$out/nemu.dtb" FW_PAYLOAD_PATH="$out/payload.bin" \
-    FW_PAYLOAD_FDT_OFFSET=0x8000000 -j"$jobs" > "$out/opensbi-build.log" 2>&1
+build_firmware() {
+    make -C "$root/opensbi" PLATFORM=generic PLATFORM_RISCV_XLEN=64 \
+        O="$out/opensbi" CROSS_COMPILE="$cross" \
+        CONFIG_SBI_ECALL_MPT_DEMO="$option" FW_TEXT_START=0x80000000 \
+        FW_DYNAMIC=n FW_JUMP=n FW_PAYLOAD=y FW_PAYLOAD_OFFSET=0x200000 \
+        FW_FDT_PATH="$out/nemu.dtb" FW_PAYLOAD_PATH="$out/payload.bin" \
+        FW_PAYLOAD_FDT_OFFSET=0x8000000 -j"$jobs"
+}
+build_firmware > "$out/opensbi-build.log" 2>&1
+if [[ "$mode" == enabled ]]; then
+    firmware_elf="$out/opensbi/platform/generic/firmware/fw_payload.elf"
+    # First link locates the pool. Embed only its bounds in the test payload,
+    # then relink firmware and require the pool to stay at the same address.
+    python3 "$root/scripts/firmware-layout.py" "${cross}nm" "$firmware_elf" "$out/pool-layout.bin"
+    "${cross}objcopy" --update-section ".fw_test_layout=$out/pool-layout.bin" "$out/payload.elf"
+    "${cross}objcopy" -O binary "$out/payload.elf" "$out/payload.bin"
+    build_firmware >> "$out/opensbi-build.log" 2>&1
+    python3 "$root/scripts/firmware-layout.py" "${cross}nm" "$firmware_elf" "$out/pool-layout-final.bin"
+    cmp "$out/pool-layout.bin" "$out/pool-layout-final.bin"
+fi
 {
     git -C "$root/NEMU" rev-parse HEAD
     git -C "$root/opensbi" rev-parse HEAD
@@ -91,4 +105,5 @@ make -C "$root/opensbi" PLATFORM=generic PLATFORM_RISCV_XLEN=64 \
         "$out/opensbi/platform/generic/firmware/fw_payload.bin" "$out/nemu.dtb" \
         "$out/nemu.config"
 } > "$out/manifest.txt"
+python3 "$root/scripts/build-record.py" record "$root" "$out" "$mode"
 echo "Built ($mode): $out; run explicitly with bash scripts/run.sh $mode"

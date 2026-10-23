@@ -1,0 +1,19 @@
+[1;34m[src/isa/riscv64/init.c:266,init_isa] NEMU will start from pc 0x80000000[0m
+[1;34m[src/device/io/port-io.c:35,add_pio_map_with_diff] Add port-io map 'uart16550' at [0x00000000000003f8, 0x0000000000000417][0m
+[1;34m[src/device/io/port-io.c:35,add_pio_map_with_diff] Add port-io map 'uartlite' at [0x00000000000003f8, 0x0000000000000404][0m
+[1;34m[src/device/io/port-io.c:35,add_pio_map_with_diff] Add port-io map 'screen' at [0x0000000000000100, 0x0000000000000107][0m
+[1;34m[src/device/io/port-io.c:35,add_pio_map_with_diff] Add port-io map 'keyboard' at [0x0000000000000060, 0x0000000000000063][0m
+[1;34m[src/device/sdcard.c:137,init_sdcard] Can not find sdcard image: [0m
+[1;34m[src/monitor/image_loader.c:219,load_img] Loading image (checkpoint/bare metal app/bbl) from cmdline: /home/jingyu/workspace/smmpt-demo/build/disabled/opensbi/platform/generic/firmware/fw_payload.bin
+[0m
+[1;34m[src/monitor/image_loader.c:264,load_img] Read 2105464 bytes from file /home/jingyu/workspace/smmpt-demo/build/disabled/opensbi/platform/generic/firmware/fw_payload.bin to 0x0x725ad1400000[0m
+[1;34m[src/monitor/monitor.c:63,welcome] Debug: [1;32mOFF[0m[0m
+[1;34m[src/monitor/monitor.c:68,welcome] Build time: 00:40:04, Oct 24 2026[0m
+[1;34m[/home/jingyu/workspace/smmpt-demo/build/disabled/nemu/src/isa/riscv64/include/../instr/special.h:38,exec_nemu_trap] nemu_trap case 0[0m
+[1;34m[src/cpu/cpu-exec.c:1037,cpu_exec] nemu: [1;32mHIT GOOD TRAP[0m at pc = 0x00000000802002be[0m
+[1;34m[src/cpu/cpu-exec.c:1043,cpu_exec] trap code:0[0m
+[1;34m[src/cpu/cpu-exec.c:172,monitor_statistic] host time spent = 53439 us[0m
+[1;34m[src/cpu/cpu-exec.c:174,monitor_statistic] total guest instructions = 4305270[0m
+[1;34m[src/cpu/cpu-exec.c:180,monitor_statistic] vst count = 0, vst unit count = 0, vst unit optimized count = 0[0m
+[1;34m[src/cpu/cpu-exec.c:183,monitor_statistic] simulation frequency = 80564194 instr/s[0m
+[1;34m[src/utils/state.c:30,is_exit_status_bad] NEMU exit with good state: 2, halt ret: 0[0m

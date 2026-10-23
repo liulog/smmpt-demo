@@ -1,0 +1,6 @@
+make: '/home/jingyu/workspace/smmpt-demo/build/enabled/nemu/tools/kconfig/build/conf' is up to date.
+make: '/home/jingyu/workspace/smmpt-demo/build/enabled/nemu/tools/fixdep/build/fixdep' is up to date.
+#
+# configuration written to .config
+#
++ g++ /home/jingyu/workspace/smmpt-demo/build/enabled/nemu/build/riscv64-nemu-interpreter

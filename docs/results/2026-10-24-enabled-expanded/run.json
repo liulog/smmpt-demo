@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-24T00:35:43.257836+08:00",
+  "mode": "enabled",
+  "parent_base_commit": "d0c00d4fe08eebd0ae9b16249e580d8785e75414",
+  "source_state": "Working-tree fixes on parent base commit; exact input hashes are in build-record.json.",
+  "nemu_upstream": "https://github.com/OpenXiangShan/NEMU.git",
+  "nemu_commit": "16f993840b97afb491a12fc43ce50eb58f49e101",
+  "opensbi_base_commit": "6ed11de7a7b829acd63716b39b737f61794f0c03",
+  "opensbi_worktree_changes": [
+    "docs/mpt-demo.md",
+    "tests/mpt/run.sh"
+  ],
+  "commands": [
+    "bash scripts/build.sh enabled",
+    "bash scripts/run.sh enabled"
+  ],
+  "build_exit_code": 0,
+  "run_exit_code": 0,
+  "assertions": 2658,
+  "guest_instructions": 10667644,
+  "good_trap_pc": "0x000000008020135a",
+  "trap_code": 0,
+  "pool_base": "0x80047000",
+  "pool_size": 131072,
+  "other_modes": "disabled and no-csr were not built or run",
+  "build_note": "Incremental NEMU build relinked the emulator (same binary hash as previous archive); payload compiled; firmware linked, payload pool bounds patched from ELF, firmware relinked, final pool bounds compared. No clean/install.",
+  "dependency_commits": {
+    "softfloat/repo": "32eb3295a3c814c1551f94ebc29eed1dec3cb3b1",
+    "nanopb": "bb3513956911e19a68a4690534b17d4b1a4d0ce7",
+    "LibCheckpoint": "1d8905cc2803c242ef257569128c2e68bf4272aa",
+    "gcpt_restore": "5169da768d18f4682a489eaabe7c071df6d6ef88"
+  },
+  "validation_scope": "Single-hart RV64 Bare; original ABI and all-RWX checks, independent data/code permissions, 16 leaf slots, real 64 KiB/32 MiB RAM boundaries, full table-pool PMP protection with MPT on/off, exhaustion rollback."
+}

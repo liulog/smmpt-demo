@@ -17,7 +17,11 @@ def check(mode, console, runtime):
     if mode == 'enabled':
         required = ['MPT-DEMO: S-mode tests starting',
                     'MPT-DEMO: ABI, splitting, exhaustion PASS',
-                    'MPT-DEMO: all RWX combinations and access faults PASS']
+                    'MPT-DEMO: all RWX combinations and access faults PASS',
+                    'MPT-DEMO: RW data and X-only code coexist PASS',
+                    'MPT-DEMO: all 16 leaf slots with independent RWX PASS',
+                    'MPT-DEMO: real 64 KiB and 32 MiB boundary accesses PASS',
+                    'MPT-DEMO: entire firmware table pool read/write protection PASS']
         required += [f'MPT-DEMO: permissions={p:016x} load/store/fetch + recovery PASS'
                      for p in range(8)]
         for marker in required:
