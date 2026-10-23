@@ -1,10 +1,10 @@
 # NEMU MPT：S-mode 最小验证 Demo
 
-在 NEMU 上启动 OpenSBI，再进入独立的 RV64 S-mode payload，通过实验性 SBI
-接口配置 MPT，并用真实的 load/store/fetch 验证权限。无需 Linux、initramfs 或用户态。
+目标是在 NEMU 上启动 OpenSBI，再进入独立的 RV64 S-mode payload，通过实验性 SBI
+接口配置 MPT，并用 load/store/fetch 验证权限。源码设计不依赖 Linux、initramfs 或用户态。
 
-**当前状态：源码与运行入口已接好，尚未执行本仓库的编译和 NEMU 运行。**
-下面的串口输出是效果示意，不是本次实测日志。按照仓库工作规则，构建需单独明确授权。
+**当前状态：已提交源码，未编译、未运行，功能是否正确尚未验证。**
+没有可提供的实测串口日志。构建脚本、启动流程和下述用例均待实际验证。
 
 ## 目录与职责
 
@@ -68,7 +68,9 @@ GET_PAGE 返回 MPT 表的权限；实际访问还受 PMP/PMA 约束。
 不是已批准的标准 Smmpt/SBI ABI。当前仅支持单 hart RV64 root domain，
 S-mode 可主动关闭 MPT，因此不作为对恶意 S-mode 的隔离机制。
 
-## 验证内容
+## 待运行的验证用例
+
+以下描述源码中的用例意图，不表示用例已经运行或通过。
 
 - SBI 发现、未初始化状态、非法参数、未知 FID、启用时拒绝修改。
 - RESET 默认全拒绝 / RWX、邻页权限保留、64 KiB / 32 MiB / 16 GiB 索引边界。
@@ -114,30 +116,19 @@ OpenSBI 在 `0x80000000`，payload 在 `0x80200000`，DTB 重定位到 `0x880000
 运行后生成 `console.log`、`nemu-runtime.log`。**必须同时通过 S-mode 完成标记与
 NEMU `HIT GOOD TRAP` 校验**；超时或指令预算耗尽不算成功。
 
-## 效果预览：串口日志示意
+## 实际验证状态
 
-下列为预期输出格式，省略 OpenSBI banner 和 NEMU 中间诊断信息；尚无本仓库实测结果。
+| 项目 | 状态 |
+| --- | --- |
+| Shell 语法检查 | 已通过 `bash -n scripts/build.sh scripts/run.sh` |
+| 日志判定器检查 | 20 项合成输入检查通过；仅检查日志判定逻辑 |
+| 编译与链接 | 未执行 |
+| OpenSBI 启动与 SBI 注册 | 未运行验证 |
+| S-mode MPT 权限与异常用例 | 未运行验证 |
+| 串口实测日志 | 无 |
 
-```text
-Experimental SBI Extensions : mptdemo
+待实际构建并运行后，才能根据留存的原始日志填写结果、展示串口输出。
+此前版本包含手写的预期 PASS 日志，该段没有实测依据，现已删除。
 
-MPT-DEMO: S-mode tests starting
-MPT-DEMO: ABI, splitting, exhaustion PASS
-MPT-DEMO: permissions=0000000000000000 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000001 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000002 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000003 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000004 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000005 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000006 load/store/fetch + recovery PASS
-MPT-DEMO: permissions=0000000000000007 load/store/fetch + recovery PASS
-MPT-DEMO: all RWX combinations and access faults PASS
-MPT-DEMO PASS checks=0x00000000000000b7; standalone S-mode payload, MPT enabled
-```
-
-NEMU 运行日志还应出现 `HIT GOOD TRAP`。任一断言失败时，S-mode 输出
-`MPT-DEMO FAIL: ... check=... scause=... stval=...` 并触发 bad trap。
-两个缺席回归模式的预期完成标记为 `MPT-DEMO: absent-extension regression PASS`。
-
-OpenSBI 子模块保留了原有 `tests/mpt/` Linux 启动测试和 `docs/mpt-demo.md` 历史记录，
-本仓库默认使用这里的独立 payload；历史文档中的已验证结果不代表本次运行结果。
+OpenSBI 子模块原有 `tests/mpt/` 和 `docs/mpt-demo.md` 随本地修改保留。
+其中历史文档里的结果声明未在本次工作中核验，不作为本仓库验证通过的依据。
