@@ -1,0 +1,5 @@
+make: Entering directory '/home/jingyu/workspace/smmpt-demo/opensbi'
+ AS        platform/generic/firmware/fw_payload.o
+ ELF       platform/generic/firmware/fw_payload.elf
+ OBJCOPY   platform/generic/firmware/fw_payload.bin
+make: Leaving directory '/home/jingyu/workspace/smmpt-demo/opensbi'

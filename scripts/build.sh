@@ -49,7 +49,7 @@ PY
     cd "$copy"
     export NEMU_HOME="$copy"
     # Suppress NEMU's upstream automatic git-add/commit recipes.
-    make __NOT_DEFINED=1 "$copy/tools/kconfig/build/conf" "$copy/tools/fixdep/build/fixdep"
+    make git_commit= "$copy/tools/kconfig/build/conf" "$copy/tools/fixdep/build/fixdep"
     tools/kconfig/build/conf --olddefconfig Kconfig
     tools/kconfig/build/conf --syncconfig Kconfig
     # Validate the effective config before compiling the emulator.
@@ -66,7 +66,7 @@ expected = ('CONFIG_RV_MPT_CHECK=y' if sys.argv[1] == 'y'
 if expected not in text:
     raise SystemExit('Wrong effective MPT configuration')
 PY
-    make __NOT_DEFINED=1 -j"$jobs"
+    make git_commit= -j"$jobs"
 ) > "$out/nemu-build.log" 2>&1
 cp "$copy/.config" "$out/nemu.config"
 dtc -I dts -O dtb -o "$out/nemu.dtb" "$root/payload/nemu.dts"
@@ -87,6 +87,8 @@ make -C "$root/opensbi" PLATFORM=generic PLATFORM_RISCV_XLEN=64 \
 {
     git -C "$root/NEMU" rev-parse HEAD
     git -C "$root/opensbi" rev-parse HEAD
-    sha256sum "$out/payload.bin" "$out/opensbi/platform/generic/firmware/fw_payload.bin"
+    sha256sum "$copy/build/riscv64-nemu-interpreter" "$out/payload.bin" \
+        "$out/opensbi/platform/generic/firmware/fw_payload.bin" "$out/nemu.dtb" \
+        "$out/nemu.config"
 } > "$out/manifest.txt"
 echo "Built ($mode): $out; run explicitly with bash scripts/run.sh $mode"

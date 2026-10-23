@@ -1,0 +1,21 @@
+{
+  "recorded_at": "2026-10-24T00:02:46.806338+08:00",
+  "mode": "enabled",
+  "nemu_upstream": "https://github.com/OpenXiangShan/NEMU.git",
+  "nemu_commit": "16f993840b97afb491a12fc43ce50eb58f49e101",
+  "opensbi_commit": "6ed11de7a7b829acd63716b39b737f61794f0c03",
+  "commands": [
+    "bash scripts/build.sh enabled",
+    "bash scripts/run.sh enabled"
+  ],
+  "run_exit_code": 0,
+  "assertions": 183,
+  "other_modes": "disabled and no-csr were not built or run",
+  "build_note": "Final build is incremental; initial successful build fetched dependencies and compiled sources. Final build verifies git_commit= suppression. Raw guest logs are from final run.",
+  "dependency_commits": {
+    "softfloat/repo": "32eb3295a3c814c1551f94ebc29eed1dec3cb3b1",
+    "nanopb": "bb3513956911e19a68a4690534b17d4b1a4d0ce7",
+    "LibCheckpoint": "1d8905cc2803c242ef257569128c2e68bf4272aa",
+    "gcpt_restore": "5169da768d18f4682a489eaabe7c071df6d6ef88"
+  }
+}

@@ -1,0 +1,2 @@
+# Preserve raw validation evidence, including the serial stream's CRLF bytes.
+docs/results/** -text -whitespace
