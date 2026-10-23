@@ -1,0 +1,7 @@
+[submodule "NEMU"]
+	path = NEMU
+	url = https://github.com/liulog/NEMU.git
+[submodule "opensbi"]
+	path = opensbi
+	url = https://github.com/liulog/opensbi.git
+	branch = smmpt-demo
