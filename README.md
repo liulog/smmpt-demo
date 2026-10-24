@@ -48,7 +48,9 @@ git submodule update --init --recursive
 子模块固定版本以父仓库 gitlink 为准。NEMU 已从
 `OpenXiangShan/NEMU` 的 `master` 拉取并快进到
 `16f993840b97afb491a12fc43ce50eb58f49e101`，不带本地模拟器补丁；OpenSBI 基于获取的
-`origin/smmpt`（`131bda94`）rebase 后恢复本地修改，另存于 `smmpt-demo` 分支。当前 OpenSBI gitlink 为 `5ffcb7e4`，包含旧 runner 的自动提交修复及历史证据说明。
+`origin/smmpt`（`131bda94`）rebase 后恢复本地修改，另存于 `smmpt-demo` 分支。当前 OpenSBI gitlink 为 `c77d1220`，包含旧 runner 的自动提交修复及历史证据说明。
+已移除基线之后 9 个没有文件变化的自动提交，仅保留两个有效提交；
+清理前后文件树完全一致，详情见 [历史清理记录](docs/integration.md#opensbi-历史清理)。
 
 ## 实验性 SBI 接口
 
