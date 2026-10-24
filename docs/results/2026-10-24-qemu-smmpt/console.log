@@ -1,0 +1,378 @@
+
+OpenSBI v1.9
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name               : riscv-virtio,qemu
+Platform Features           : medeleg
+Platform HART Count         : 1
+Platform HART Protection    : pmp,smmpt
+Platform IPI Device         : aclint-mswi
+Platform Timer Device       : aclint-mtimer @ 10000000Hz
+Platform Console Device     : uart8250
+Platform HSM Device         : ---
+Platform PMU Device         : ---
+Platform Reboot Device      : syscon-reboot
+Platform Shutdown Device    : syscon-poweroff
+Platform Suspend Device     : ---
+Platform CPPC Device        : ---
+Firmware Base               : 0x80000000
+Firmware Size               : 1353 KB
+Firmware RW Offset          : 0x40000
+Firmware RW Size            : 1097 KB
+Firmware Heap Offset        : 0x49000
+Firmware Heap Size          : 1061 KB (total), 1 KB (reserved), 47 KB (used), 1012 KB (free)
+Firmware Scratch Size       : 4096 B (total), 1600 B (used), 2496 B (free)
+Runtime SBI Version         : 3.0
+Standard SBI Extensions     : time,rfnc,ipi,base,hsm,srst,pmu,dbcn,fwft,legacy,dbtr,sse
+Experimental SBI Extensions : none
+
+Domain0 Name                : root
+Domain0 Boot HART           : 0
+Domain0 HARTs               : 0x0*
+Domain0 Region00            : 0x0000000080000000-0x000000008003ffff M: (F,R,X) S/U: ()
+Domain0 Region01            : 0x0000000080000000-0x00000000801fffff M: (F,R,W) S/U: ()
+Domain0 Region02            : 0x0000000000100000-0x0000000000100fff M: (I,R,W) S/U: (R,W)
+Domain0 Region03            : 0x0000000010000000-0x0000000010000fff M: (I,R,W) S/U: (R,W)
+Domain0 Region04            : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+Domain0 Region05            : 0x000000000c400000-0x000000000c5fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region06            : 0x000000000c000000-0x000000000c3fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region07            : 0x0000000000000000-0xffffffffffffffff M: () S/U: (R,W,X)
+Domain0 Next Address        : 0x0000000080200000
+Domain0 Next Arg1           : 0x00000000bfe00000
+Domain0 Next Mode           : S-mode
+Domain0 SysReset            : yes
+Domain0 SysSuspend          : yes
+
+Boot HART ID                : 0
+Boot HART Domain            : root
+Boot HART Priv Version      : v1.12
+Boot HART Base ISA          : rv64imafdch
+Boot HART ISA Extensions    : sstc,zicntr,zihpm,zicboz,zicbom,sdtrig,svadu,f,d,smsdid,smmpt
+Boot HART PMP Count         : 16
+Boot HART PMP Granularity   : 2 bits
+Boot HART PMP Address Bits  : 54
+Boot HART MHPM Info         : 16 (0x0007fff8)
+Boot HART Debug Triggers    : 2 triggers
+Boot HART MIDELEG           : 0x0000000000001666
+Boot HART MEDELEG           : 0x0000000000f4b509
+QEMU: SELFTEST fw(0x80010000)=DENY(ok)  kernel(0x80200000)=PERMIT(ok)
+[    0.000000] Booting Linux on hartid 0
+[    0.000000] Linux version 6.18.3+ (jingyu@zgclab) (riscv64-unknown-linux-gnu-gcc (gf3b8c022145) 15.2.0, GNU ld (GNU Binutils) 2.45.0.20251020) #13 SMP PREEMPT_DYNAMIC Thu Oct 22 23:45:09 CST 2026
+[    0.000000] random: crng init done
+[    0.000000] Machine model: riscv-virtio,qemu
+[    0.000000] SBI specification v3.0 detected
+[    0.000000] SBI implementation ID=0x1 Version=0x10009
+[    0.000000] SBI TIME extension detected
+[    0.000000] SBI IPI extension detected
+[    0.000000] SBI RFENCE extension detected
+[    0.000000] SBI SRST extension detected
+[    0.000000] SBI DBCN extension detected
+[    0.000000] SBI FWFT extension detected
+[    0.000000] earlycon: sbi0 at I/O port 0x0 (options '')
+[    0.000000] printk: legacy bootconsole [sbi0] enabled
+[    0.000000] efi: UEFI not found.
+[    0.000000] cma: Reserved 16 MiB at 0x00000000bee00000
+[    0.000000] PTP: CSRRSI FAST currently supports Sv39 only
+[    0.000000] PTP: CSRRSI FAST 1GiB window includes unused non-DRAM space
+[    0.000000] PTP: CSRRSI FAST physical window [0x0000000080000000,0x00000000c0000000)
+[    0.000000] PTP: early page-table pool phys=[0x00000000b7c00000,0x00000000bec00000) main=50331648 total=117440512
+[    0.000000] PTP: CSRRSI FAST stack backing phys=[0x00000000bec00000,0x00000000bec41000)
+[    0.000000] OF: reserved mem: 0x0000000080000000..0x00000000801fffff (2048 KiB) nomap non-reusable mmode_resv0@80000000
+[    0.000000] Zone ranges:
+[    0.000000]   Normal   [mem 0x0000000080000000-0x00000000bfffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000080000000-0x00000000801fffff]
+[    0.000000]   node   0: [mem 0x0000000080200000-0x00000000bfffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000080000000-0x00000000bfffffff]
+[    0.000000] PTP: pgd_root_cache range=[ffffffd63ac00000,ffffffd63ec00000) order=2 objects=4096
+[    0.000000] PTP: pgtable_pool range=[ffffffd637c03000,ffffffd63ac00000) order=0 objects=12285
+[    0.000000] SBI HSM extension detected
+[    0.000000] riscv: base ISA extensions acdfhim
+[    0.000000] riscv: ELF capabilities acdfim
+[    0.000000] Queued spinlock using Ziccrse: enabled
+[    0.000000] percpu: Embedded 52 pages/cpu s87768 r8192 d117032 u212992
+[    0.000000] Kernel command line: console=ttyS0 earlycon=sbi rdinit=/init
+[    0.000000] printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+[    0.000000] Dentry cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.000000] software IO TLB: SWIOTLB bounce buffer size adjusted to 1MB
+[    0.000000] software IO TLB: area num 1.
+[    0.000000] software IO TLB: mapped [mem 0x00000000bed00000-0x00000000bee00000] (1MB)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 262144
+[    0.000000] mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] 
+[    0.000000] **********************************************************
+[    0.000000] **   NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE   **
+[    0.000000] **                                                      **
+[    0.000000] ** trace_printk() being used. Allocating extra memory.  **
+[    0.000000] **                                                      **
+[    0.000000] ** This means that this is a DEBUG kernel and it is     **
+[    0.000000] ** unsafe for production use.                           **
+[    0.000000] **                                                      **
+[    0.000000] ** If you see this message and you are not debugging    **
+[    0.000000] ** the kernel, report this immediately to your vendor!  **
+[    0.000000] **                                                      **
+[    0.000000] **   NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE   **
+[    0.000000] **********************************************************
+[    0.000000] Dynamic Preempt: voluntary
+[    0.000000] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000] rcu: 	RCU restricting CPUs from NR_CPUS=16 to nr_cpu_ids=1.
+[    0.000000] 	Trampoline variant of Tasks RCU enabled.
+[    0.000000] 	Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=1
+[    0.000000] RCU Tasks: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=1.
+[    0.000000] RCU Tasks Trace: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=1.
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] riscv-intc: 64 local interrupts mapped
+[    0.000000] riscv: providing IPIs using SBI IPI extension
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] clocksource: riscv_clocksource: mask: 0xffffffffffffffff max_cycles: 0x24e6a1710, max_idle_ns: 440795202120 ns
+[    0.000045] sched_clock: 64 bits at 10MHz, resolution 100ns, wraps every 4398046511100ns
+[    0.000341] riscv-timer: Timer interrupt in S-mode is available via sstc extension
+[    0.003666] init_sbi_dbtr: mcontrol6 trigger available.
+[    0.006998] Console: colour dummy device 80x25
+[    0.008571] Calibrating delay loop (skipped), value calculated using timer frequency.. 20.00 BogoMIPS (lpj=40000)
+[    0.008903] pid_max: default: 32768 minimum: 301
+[    0.010671] LSM: initializing lsm=capability,landlock,apparmor
+[    0.012433] landlock: Up and running.
+[    0.016881] AppArmor: AppArmor initialized
+[    0.018895] Mount-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.019105] Mountpoint-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.032262] IEE: CSRRSI stack owner va=ffffffffffffa000 backing=ffffffd63ec00000
+[    0.032839] IEE: CSRRSI stack slot 0 va=ffffffffffff9000 top=ffffffffffffa000 backing=ffffffd63ec01000
+[    0.033003] IEE: CSRRSI stack slot 1 va=ffffffffffff7000 top=ffffffffffff8000 backing=ffffffd63ec02000
+[    0.033147] IEE: CSRRSI stack slot 2 va=ffffffffffff5000 top=ffffffffffff6000 backing=ffffffd63ec03000
+[    0.033295] IEE: CSRRSI stack slot 3 va=ffffffffffff3000 top=ffffffffffff4000 backing=ffffffd63ec04000
+[    0.033436] IEE: CSRRSI stack slot 4 va=ffffffffffff1000 top=ffffffffffff2000 backing=ffffffd63ec05000
+[    0.033579] IEE: CSRRSI stack slot 5 va=fffffffffffef000 top=ffffffffffff0000 backing=ffffffd63ec06000
+[    0.033774] IEE: CSRRSI stack slot 6 va=fffffffffffed000 top=fffffffffffee000 backing=ffffffd63ec07000
+[    0.033993] IEE: CSRRSI stack slot 7 va=fffffffffffeb000 top=fffffffffffec000 backing=ffffffd63ec08000
+[    0.034200] IEE: CSRRSI stack slot 8 va=fffffffffffe9000 top=fffffffffffea000 backing=ffffffd63ec09000
+[    0.034365] IEE: CSRRSI stack slot 9 va=fffffffffffe7000 top=fffffffffffe8000 backing=ffffffd63ec0a000
+[    0.034534] IEE: CSRRSI stack slot 10 va=fffffffffffe5000 top=fffffffffffe6000 backing=ffffffd63ec0b000
+[    0.034822] IEE: CSRRSI stack slot 11 va=fffffffffffe3000 top=fffffffffffe4000 backing=ffffffd63ec0c000
+[    0.035020] IEE: CSRRSI stack slot 12 va=fffffffffffe1000 top=fffffffffffe2000 backing=ffffffd63ec0d000
+[    0.035251] IEE: CSRRSI stack slot 13 va=fffffffffffdf000 top=fffffffffffe0000 backing=ffffffd63ec0e000
+[    0.035729] IEE: CSRRSI stack slot 14 va=fffffffffffdd000 top=fffffffffffde000 backing=ffffffd63ec0f000
+[    0.035933] IEE: CSRRSI stack slot 15 va=fffffffffffdb000 top=fffffffffffdc000 backing=ffffffd63ec10000
+[    0.036082] IEE: CSRRSI stack slot 16 va=fffffffffffd9000 top=fffffffffffda000 backing=ffffffd63ec11000
+[    0.036227] IEE: CSRRSI stack slot 17 va=fffffffffffd7000 top=fffffffffffd8000 backing=ffffffd63ec12000
+[    0.036372] IEE: CSRRSI stack slot 18 va=fffffffffffd5000 top=fffffffffffd6000 backing=ffffffd63ec13000
+[    0.036519] IEE: CSRRSI stack slot 19 va=fffffffffffd3000 top=fffffffffffd4000 backing=ffffffd63ec14000
+[    0.036665] IEE: CSRRSI stack slot 20 va=fffffffffffd1000 top=fffffffffffd2000 backing=ffffffd63ec15000
+[    0.036809] IEE: CSRRSI stack slot 21 va=fffffffffffcf000 top=fffffffffffd0000 backing=ffffffd63ec16000
+[    0.036953] IEE: CSRRSI stack slot 22 va=fffffffffffcd000 top=fffffffffffce000 backing=ffffffd63ec17000
+[    0.037097] IEE: CSRRSI stack slot 23 va=fffffffffffcb000 top=fffffffffffcc000 backing=ffffffd63ec18000
+[    0.037273] IEE: CSRRSI stack slot 24 va=fffffffffffc9000 top=fffffffffffca000 backing=ffffffd63ec19000
+[    0.037432] IEE: CSRRSI stack slot 25 va=fffffffffffc7000 top=fffffffffffc8000 backing=ffffffd63ec1a000
+[    0.037580] IEE: CSRRSI stack slot 26 va=fffffffffffc5000 top=fffffffffffc6000 backing=ffffffd63ec1b000
+[    0.037725] IEE: CSRRSI stack slot 27 va=fffffffffffc3000 top=fffffffffffc4000 backing=ffffffd63ec1c000
+[    0.037868] IEE: CSRRSI stack slot 28 va=fffffffffffc1000 top=fffffffffffc2000 backing=ffffffd63ec1d000
+[    0.038011] IEE: CSRRSI stack slot 29 va=fffffffffffbf000 top=fffffffffffc0000 backing=ffffffd63ec1e000
+[    0.038155] IEE: CSRRSI stack slot 30 va=fffffffffffbd000 top=fffffffffffbe000 backing=ffffffd63ec1f000
+[    0.038307] IEE: CSRRSI stack slot 31 va=fffffffffffbb000 top=fffffffffffbc000 backing=ffffffd63ec20000
+[    0.038452] IEE: CSRRSI stack slot 32 va=fffffffffffb9000 top=fffffffffffba000 backing=ffffffd63ec21000
+[    0.038598] IEE: CSRRSI stack slot 33 va=fffffffffffb7000 top=fffffffffffb8000 backing=ffffffd63ec22000
+[    0.038743] IEE: CSRRSI stack slot 34 va=fffffffffffb5000 top=fffffffffffb6000 backing=ffffffd63ec23000
+[    0.038887] IEE: CSRRSI stack slot 35 va=fffffffffffb3000 top=fffffffffffb4000 backing=ffffffd63ec24000
+[    0.039032] IEE: CSRRSI stack slot 36 va=fffffffffffb1000 top=fffffffffffb2000 backing=ffffffd63ec25000
+[    0.039246] IEE: CSRRSI stack slot 37 va=fffffffffffaf000 top=fffffffffffb0000 backing=ffffffd63ec26000
+[    0.039463] IEE: CSRRSI stack slot 38 va=fffffffffffad000 top=fffffffffffae000 backing=ffffffd63ec27000
+[    0.039616] IEE: CSRRSI stack slot 39 va=fffffffffffab000 top=fffffffffffac000 backing=ffffffd63ec28000
+[    0.039867] IEE: CSRRSI stack slot 40 va=fffffffffffa9000 top=fffffffffffaa000 backing=ffffffd63ec29000
+[    0.040025] IEE: CSRRSI stack slot 41 va=fffffffffffa7000 top=fffffffffffa8000 backing=ffffffd63ec2a000
+[    0.040173] IEE: CSRRSI stack slot 42 va=fffffffffffa5000 top=fffffffffffa6000 backing=ffffffd63ec2b000
+[    0.040353] IEE: CSRRSI stack slot 43 va=fffffffffffa3000 top=fffffffffffa4000 backing=ffffffd63ec2c000
+[    0.040556] IEE: CSRRSI stack slot 44 va=fffffffffffa1000 top=fffffffffffa2000 backing=ffffffd63ec2d000
+[    0.040747] IEE: CSRRSI stack slot 45 va=fffffffffff9f000 top=fffffffffffa0000 backing=ffffffd63ec2e000
+[    0.040925] IEE: CSRRSI stack slot 46 va=fffffffffff9d000 top=fffffffffff9e000 backing=ffffffd63ec2f000
+[    0.041080] IEE: CSRRSI stack slot 47 va=fffffffffff9b000 top=fffffffffff9c000 backing=ffffffd63ec30000
+[    0.041266] IEE: CSRRSI stack slot 48 va=fffffffffff99000 top=fffffffffff9a000 backing=ffffffd63ec31000
+[    0.041493] IEE: CSRRSI stack slot 49 va=fffffffffff97000 top=fffffffffff98000 backing=ffffffd63ec32000
+[    0.041659] IEE: CSRRSI stack slot 50 va=fffffffffff95000 top=fffffffffff96000 backing=ffffffd63ec33000
+[    0.041839] IEE: CSRRSI stack slot 51 va=fffffffffff93000 top=fffffffffff94000 backing=ffffffd63ec34000
+[    0.041990] IEE: CSRRSI stack slot 52 va=fffffffffff91000 top=fffffffffff92000 backing=ffffffd63ec35000
+[    0.042159] IEE: CSRRSI stack slot 53 va=fffffffffff8f000 top=fffffffffff90000 backing=ffffffd63ec36000
+[    0.042319] IEE: CSRRSI stack slot 54 va=fffffffffff8d000 top=fffffffffff8e000 backing=ffffffd63ec37000
+[    0.042468] IEE: CSRRSI stack slot 55 va=fffffffffff8b000 top=fffffffffff8c000 backing=ffffffd63ec38000
+[    0.042614] IEE: CSRRSI stack slot 56 va=fffffffffff89000 top=fffffffffff8a000 backing=ffffffd63ec39000
+[    0.042806] IEE: CSRRSI stack slot 57 va=fffffffffff87000 top=fffffffffff88000 backing=ffffffd63ec3a000
+[    0.042959] IEE: CSRRSI stack slot 58 va=fffffffffff85000 top=fffffffffff86000 backing=ffffffd63ec3b000
+[    0.043147] IEE: CSRRSI stack slot 59 va=fffffffffff83000 top=fffffffffff84000 backing=ffffffd63ec3c000
+[    0.043315] IEE: CSRRSI stack slot 60 va=fffffffffff81000 top=fffffffffff82000 backing=ffffffd63ec3d000
+[    0.043460] IEE: CSRRSI stack slot 61 va=fffffffffff7f000 top=fffffffffff80000 backing=ffffffd63ec3e000
+[    0.043624] IEE: CSRRSI stack slot 62 va=fffffffffff7d000 top=fffffffffff7e000 backing=ffffffd63ec3f000
+[    0.043775] IEE: CSRRSI stack slot 63 va=fffffffffff7b000 top=fffffffffff7c000 backing=ffffffd63ec40000
+[    0.044091] IEE: CSRRSI stack initialization complete: slots=64 size=4096
+[    0.044542] IEE: CSRRSI FAST alias uses PMDs; BITMAP backing RO
+[    0.045004] IEE: BITMAP [ffffffc580000000,ffffffc580200000) backing=0x00000000b5a00000 bytes=2097152 outer-RO inner-RW non-Global
+[    0.045607] IEE: writable alias [ffffffe600000000,ffffffe640000000) offset=1000000000
+[    0.045882] PTP: page-table write hooks enabled
+[    0.056535] PTP: CSRRSI FAST stack backing outer-RO [ffffffd63ec00000,ffffffd63ec41000)
+[    0.056733] PTP: page-table pool outer-RO / IEE-alias-RW [ffffffd637c00000,ffffffd63ec00000)
+[    0.057015] PTP: static page tables outer-RO / IEE-alias-RW [ffffffff82e00000,ffffffff83000000)
+[    0.057287] IEE: initialization complete, gate active, iee_satp=80001000000bac03
+[    0.088808] riscv: ELF compat mode supported
+[    0.090084] ASID allocator using 16 bits (65536 entries)
+[    0.091948] rcu: Hierarchical SRCU implementation.
+[    0.092135] rcu: 	Max phase no-delay instances is 1000.
+[    0.097190] EFI services will not be available.
+[    0.098030] smp: Bringing up secondary CPUs ...
+[    0.098640] smp: Brought up 1 node, 1 CPU
+[    0.102363] Memory: 765732K/1048576K available (18480K kernel code, 11912K rwdata, 8192K rodata, 2438K init, 519K bss, 260628K reserved, 16384K cma-reserved)
+[    0.111751] devtmpfs: initialized
+[    0.122355] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.122706] posixtimers hash table entries: 512 (order: 1, 8192 bytes, linear)
+[    0.122963] futex hash table entries: 256 (16384 bytes on 1 NUMA nodes, total 16 KiB, linear).
+[    0.127163] pinctrl core: initialized pinctrl subsystem
+[    0.195621] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.205012] DMA: preallocated 128 KiB GFP_KERNEL pool for atomic allocations
+[    0.205564] audit: initializing netlink subsys (disabled)
+[    0.209568] display class register
+[    0.210587] thermal_sys: Registered thermal governor 'step_wise'
+[    0.211224] audit: type=2000 audit(0.196:1): state=initialized audit_enabled=0 res=1
+[    0.213220] SBI misaligned access exception delegation ok
+[    0.235537] cpu0: Ratio of byte access time to unaligned word access is 7.60, unaligned accesses are fast
+[    0.236108] arch_hw_breakpoint_init: total number of type 6 triggers: 2
+[    0.236482] CPU 0: HW Breakpoint shared memory registered.
+[    0.262193] HugeTLB: registered 1.00 GiB page size, pre-allocated 0 pages
+[    0.262438] HugeTLB: 16380 KiB vmemmap can be freed for a 1.00 GiB page
+[    0.262563] HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+[    0.262671] HugeTLB: 28 KiB vmemmap can be freed for a 2.00 MiB page
+[    0.282937] iommu: Default domain type: Translated
+[    0.283153] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.284791] SCSI subsystem initialized
+[    0.299615] usbcore: registered new interface driver usbfs
+[    0.300038] usbcore: registered new interface driver hub
+[    0.300273] usbcore: registered new device driver usb
+[    0.300827] mc: Linux media interface: v0.10
+[    0.301107] videodev: Linux video capture interface: v2.00
+[    0.301776] pps_core: LinuxPPS API ver. 1 registered
+[    0.301903] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.302106] PTP clock support registered
+[    0.304228] Advanced Linux Sound Architecture Driver Initialized.
+[    0.321776] NetLabel: Initializing
+[    0.322014] NetLabel:  domain hash size = 128
+[    0.322106] NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+[    0.322820] NetLabel:  unlabeled traffic allowed by default
+[    0.331476] mctp: management component transport protocol core
+[    0.331660] NET: Registered PF_MCTP protocol family
+[    0.332725] vgaarb: loaded
+[    0.335366] clocksource: Switched to clocksource riscv_clocksource
+[    0.449870] VFS: Disk quotas dquot_6.6.0
+[    0.450128] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.454318] AppArmor: AppArmor Filesystem Enabled
+[    0.471871] NET: Registered PF_INET protocol family
+[    0.472911] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.479996] tcp_listen_portaddr_hash hash table entries: 512 (order: 1, 8192 bytes, linear)
+[    0.481343] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.481589] TCP established hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.481903] TCP bind hash table entries: 8192 (order: 6, 262144 bytes, linear)
+[    0.482229] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.484582] MPTCP token hash table entries: 1024 (order: 3, 24576 bytes, linear)
+[    0.484992] UDP hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.485283] UDP-Lite hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.486494] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.486960] NET: Registered PF_XDP protocol family
+[    0.487256] PCI: CLS 0 bytes, default 64
+[    0.490418] Initialise system trusted keyrings
+[    0.494721] Unpacking initramfs...
+[    0.500676] workingset: timestamp_bits=46 max_order=18 bucket_order=0
+[    0.507996] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.510197] fuse: init (API version 7.45)
+[    0.623641] Key type asymmetric registered
+[    0.623915] Asymmetric key parser 'x509' registered
+[    0.624488] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 241)
+[    0.626064] io scheduler mq-deadline registered
+[    0.641682] riscv-plic: interrupt-controller@c000000: mapped 95 interrupts with 1 handlers for 2 contexts.
+[    0.659905] Serial: 8250/16550 driver, 17 ports, IRQ sharing disabled
+[    0.700354] printk: legacy console [ttyS0] disabled
+[    0.708186] 10000000.serial: ttyS0 at MMIO 0x10000000 (irq = 12, base_baud = 230400) is a 16550A
+[    0.710209] printk: legacy console [ttyS0] enabled
+[    0.710209] printk: legacy console [ttyS0] enabled
+[    0.710763] printk: legacy bootconsole [sbi0] disabled
+[    0.710763] printk: legacy bootconsole [sbi0] disabled
+[    0.756690] loop: module loaded
+[    0.768653] Rounding down aligned max_sectors from 4294967295 to 4294967288
+[    0.772983] db_root: cannot open: /etc/target
+[    0.782016] tun: Universal TUN/TAP device driver, 1.6
+[    0.788611] usbcore: registered new interface driver ax88179_178a
+[    0.788923] usbcore: registered new interface driver cdc_ether
+[    0.789181] usbcore: registered new interface driver cdc_ncm
+[    0.790495] VFIO - User Level meta-driver version: 0.3
+[    0.797395] usbcore: registered new interface driver uas
+[    0.797772] usbcore: registered new interface driver usb-storage
+[    0.797946] usbcore: registered new device driver onboard-usb-dev
+[    0.804065] i2c_dev: i2c /dev entries driver
+[    0.805867] IR NEC protocol handler initialized
+[    0.812808] usbcore: registered new interface driver uvcvideo
+[    0.815780] device-mapper: ioctl: 4.50.0-ioctl (2025-04-28) initialised: dm-devel@lists.linux.dev
+[    0.816574] sdhci: Secure Digital Host Controller Interface driver
+[    0.816734] sdhci: Copyright(c) Pierre Ossman
+[    0.816845] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.817568] hid: raw HID events driver (C) Jiri Kosina
+[    0.823942] usbcore: registered new interface driver usbhid
+[    0.824138] usbhid: USB HID core driver
+[    0.826276] riscv-pmu-sbi: SBI PMU extension is available
+[    0.826802] riscv-pmu-sbi: 16 firmware and 18 hardware counters
+[    0.826947] riscv-pmu-sbi: Perf sampling/filtering is not supported as sscof extension is not available
+[    0.832322]  cs_system_cfg: CoreSight Configuration manager initialised
+[    0.835750] usbcore: registered new interface driver snd-usb-audio
+[    0.838575] NET: Registered PF_INET6 protocol family
+[    0.860793] Segment Routing with IPv6
+[    0.861160] In-situ OAM (IOAM) with IPv6
+[    0.861656] NET: Registered PF_PACKET protocol family
+[    2.868370] Freeing initrd memory: 54776K
+[    2.971164] NET: Registered PF_RXRPC protocol family
+[    2.971738] Key type rxrpc registered
+[    2.971835] Key type rxrpc_s registered
+[    2.973050] Key type dns_resolver registered
+[    2.974525] SIP: enabled; satp root/ASID and stvec target checks passed
+[    2.974760] IEE test: starting backend=CSRRSI iterations=10
+[    2.974896] IEE test: testing cpu 0
+[    2.975902] IEE test: cpu 0 PASS
+[    2.976051] IEE test: PASS backend=CSRRSI cpus=1 iterations=10
+[    2.977897] IEE: BITMAP self-test passed: conversions, first/last PFN, RO/RW/nG, backing RO, outer store faults, 1 CPUs x 16 gate round trips
+[    2.978507] PTP: self-test passed
+[    3.014430] Loading compiled-in X.509 certificates
+[    3.065931] Key type .fscrypt registered
+[    3.066158] Key type fscrypt-provisioning registered
+[    3.068153] AppArmor: AppArmor sha256 policy hashing enabled
+[    3.088502] clk: Disabling unused clocks
+[    3.088851] PM: genpd: Disabling unused power domains
+[    3.089029] ALSA device list:
+[    3.089135]   No soundcards found.
+[    3.144135] Freeing unused kernel image (initmem) memory: 2436K
+[    3.152502] Checked W+X mappings: passed, no W+X pages found
+[    3.152875] Run /init as init process
+run init for debuging based on ramdisk ...
+
+~ # uname -a
+Linux (none) 6.18.3+ #13 SMP PREEMPT_DYNAMIC Thu Oct 22 23:45:09 CST 2026 riscv64 GNU/Linux
+~ # cat /proc/cpuinfo
+processor	: 0
+hart		: 0
+isa		: rv64imafdch_zicbom_zicbop_zicboz_ziccrse_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zaamo_zalrsc_zawrs_zfa_zca_zcd_zba_zbb_zbc_zbs_sstc_svadu_svvptc_sdtrig
+mmu		: sv39
+mvendorid	: 0x0
+marchid		: 0x2a
+mimpid		: 0x0
+hart isa	: rv64imafdch_zicbom_zicbop_zicboz_ziccrse_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zaamo_zalrsc_zawrs_zfa_zca_zcd_zba_zbb_zbc_zbs_sstc_svadu_svvptc_sdtrig
+
+~ # if test -r /proc/cpuinfo && uname -r; then printf '\nSMMPT-USERSPACE-%s\n' P
+ASS; fi
+6.18.3+
+
+SMMPT-USERSPACE-PASS
+~ # poweroff -f
+[    3.558270] reboot: Power down

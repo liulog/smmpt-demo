@@ -1,0 +1,43 @@
+{
+  "checks": {
+    "no_timeout": true,
+    "qemu_exit_zero": true,
+    "smmpt_hart_protection": true,
+    "walker_selftest": true,
+    "linux_boot": true,
+    "guest_shell": true,
+    "userspace_command": true,
+    "sv39": true,
+    "guest_poweroff": true,
+    "no_panic": true
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 4.07,
+  "command": [
+    "bash",
+    "scripts/run-qemu-smmpt.sh"
+  ],
+  "guest_commands": [
+    "uname -a",
+    "cat /proc/cpuinfo",
+    "if test -r /proc/cpuinfo && uname -r; then printf '\\nSMMPT-USERSPACE-%s\\n' PASS; fi",
+    "poweroff -f"
+  ],
+  "overrides": {},
+  "sources": {
+    "qemu-smmpt": "3da028d454cea2149cc95c9f4160431b5c3b1b13",
+    "opensbi-smmpt": "bd5ca8b1d313ea19845d6e3232a3f9b1b72a7a76"
+  },
+  "source_status": {
+    "qemu-smmpt": "",
+    "opensbi-smmpt": ""
+  },
+  "sha256": {
+    "build/qemu-smmpt/qemu-system-riscv64": "60f6ba755d6531cf8cbbba549f88de6e3e3596c9dbb3bf05a37dc65912266cfe",
+    "build/opensbi-smmpt/platform/generic/firmware/fw_dynamic.bin": "1a1740c65cdc06498a75ba6f04af4a9d470582ed4ba60a4fed37012ae363719b",
+    "../linux-riscv-gate-merge/arch/riscv/boot/Image": "98f7fa3535cbb7c566dfc17caf797ce44cc68c14713ec694d0e07592bceb0e19",
+    "../linux-riscv-gate-merge/rootfs.cpio.gz": "3852b56a3b7b6d5ae0b00300ccad56ade5c0e84d65ad6eea382cdcf8b272f9b6",
+    "scripts/run-qemu-smmpt.sh": "3736abeb891dc104c64f38252b50c38fccad74f0932dafe119e0ef278459300b",
+    "scripts/verify-qemu-smmpt.py": "b0bca55d9b02c4921dd04caac2b26ca0d1821ff80aecf8bcf4da6d5f82d0c909"
+  }
+}

@@ -6,3 +6,11 @@
 	path = opensbi
 	url = https://github.com/liulog/opensbi.git
 	branch = smmpt-demo
+[submodule "qemu-smmpt"]
+	path = qemu-smmpt
+	url = https://github.com/pathakraul/qemu.git
+	branch = rpathak_smmpt_v1
+[submodule "opensbi-smmpt"]
+	path = opensbi-smmpt
+	url = https://github.com/pathakraul/opensbi.git
+	branch = rpathak_smmpt_v5

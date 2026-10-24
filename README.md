@@ -1,4 +1,58 @@
-# NEMU MPT：S-mode 最小验证 Demo
+# Smmpt / MPT 验证：NEMU 与 QEMU
+
+新增的 Pathak QEMU / OpenSBI 子模块与 Linux 启动入口见
+[QEMU Smmpt 说明](docs/qemu-smmpt.md)。该链路的验证状态单独记录。
+
+根目录使用 `make help` 查看入口。两条验证链路独立：
+
+| 操作 | NEMU：独立 S-mode payload | QEMU Smmpt：Linux |
+| --- | --- | --- |
+| 显式构建 | `make nemu-build` | `make qemu-build` |
+| 运行 | `make nemu-run`（含结果核验） | `make qemu-run`（交互串口） |
+| 自动验证 | `make nemu-verify` | `make qemu-verify` |
+
+直接执行 `make` 只显示帮助。运行和验证目标只使用已有产物，不自动编译；
+构建目标需在明确授权后执行，无 install 或 clean 目标。
+NEMU 模式通过 `NEMU_MODE=enabled|disabled|no-csr` 选择，默认 `enabled`。
+Makefile 与入口脚本不写死主机的绝对路径：源码、产物和镜像均相对仓库定位，
+工具链从 PATH 查找。QEMU 的 `IMAGE`、`INITRD` 可以通过 make 参数覆盖。
+
+## QEMU Smmpt：Linux 实测结果
+
+**实测状态（2026-10-24）：QEMU `3da028d4` 与 OpenSBI `bd5ca8b1` 已编译并运行通过。**
+复用 `../linux-riscv-gate-merge/arch/riscv/boot/Image`（Linux `6.18.3+`）和同目录
+`rootfs.cpio.gz`，单 hart、1 GiB RAM、TCG，进入用户态后执行 `uname`、读取
+`/proc/cpuinfo`，最后 `poweroff -f` 正常关机；QEMU 返回码 0。
+未修改两份上游源码，未重新编译 Linux，未执行 install 或 clean。
+
+| 验证项 | 实测结果 |
+| --- | --- |
+| OpenSBI 注册 Smmpt | `Platform HART Protection : pmp,smmpt` |
+| QEMU MPT walker 自检 | 固件 `0x80010000` 读被拒绝，内核 `0x80200000` 取指被允许 |
+| Linux 用户态 | shell 命令执行成功，输出 `SMMPT-USERSPACE-PASS` |
+| 分页模式 | `/proc/cpuinfo` 报告 `mmu : sv39` |
+| 关机与自动检查 | 正常 Power down、进程返回码 0，10 项检查全部通过，无 panic、无超时 |
+
+QEMU 同时开启 `x-smsdid=on,x-smmpt=on`；OpenSBI 建立 MPT 并写入 `mmpt`，
+QEMU 在 S/U-mode 的地址翻译路径检查 MPT 权限。上述自检由 QEMU 的
+`smmpt_check_access()` 首次被调用时执行并通过主机 `printf` 输出，
+不是 OpenSBI 主动执行的 guest 测试，也未让 guest 真正访问这两个自检地址。
+当前覆盖启动链与 walker 自检，尚未验证 guest 主动访问受限页产生的异常、
+PMP 允许而仅由 MPT 拒绝的情形或多 domain 隔离；不能等同于下述 NEMU 权限用例。
+Linux 自带 IEE、BITMAP、PTP 启动自检的 PASS 也不计为额外的 Smmpt 权限验证。
+
+该 Image 的 `CSRRSI FAST` 要求 Sv39，因此入口设置 `sv48=off,sv57=off`；
+使用 rootfs 自带 `/init` 挂载 devtmpfs 并接通串口。详见
+[QEMU 启动说明](docs/qemu-smmpt.md)和
+[原始日志、输入 SHA256 与检查记录](docs/results/2026-10-24-qemu-smmpt/)。
+
+```sh
+make qemu-run                         # 交互启动已有产物
+make qemu-verify                      # 自动验证并正常关机
+make qemu-run IMAGE=../path/to/Image INITRD=../path/to/rootfs.cpio.gz
+```
+
+## NEMU MPT：独立 S-mode 验证
 
 目标是在 NEMU 上启动 OpenSBI，再进入独立的 RV64 S-mode payload，通过实验性 SBI
 接口配置 MPT，并用 load/store/fetch 验证权限。源码设计不依赖 Linux、initramfs 或用户态。
@@ -16,9 +70,15 @@
 | --- | --- |
 | `NEMU/` | Git 子模块，实现 `mmpt` CSR、MPT walker 和访存权限检查 |
 | `opensbi/` | Git 子模块，初始化平台、提供实验性 MPT SBI 接口、维护固件内的权限表 |
+| `qemu-smmpt/` | Pathak QEMU 子模块，实现 Smsdid / Smmpt CSR、MPT walker 和访存检查 |
+| `opensbi-smmpt/` | Pathak OpenSBI 子模块，根据 domain 内存区域建立并启用 MPT |
 | `payload/` | 独立 S-mode 程序，运行全部验证、接收并检查异常、输出串口结果 |
+| `Makefile` | 统一入口，以 `nemu-*` / `qemu-*` 分开构建、运行和验证 |
 | `scripts/build.sh` | 显式构建入口，按模式隔离输出目录 |
 | `scripts/run.sh` | 仅运行现有产物并核验结果，不自动构建 |
+| `scripts/build-qemu-smmpt.sh` | 显式构建 QEMU 和其 OpenSBI，输出到 `build/` |
+| `scripts/run-qemu-smmpt.sh` | 仅启动现有 QEMU、固件、Linux Image 和 initramfs |
+| `scripts/verify-qemu-smmpt.py` | 自动验证 QEMU Linux 启动、用户态命令与正常关机 |
 | `docs/integration.md` | 本地修改保留、rebase 和版本说明 |
 
 ```text
@@ -107,15 +167,15 @@ rsync、dtc，以及 RV64 交叉工具链；NEMU 还需要 readline、SDL2、zli
 
 ```sh
 # 主路径：构建 NEMU、S-mode payload 和 OpenSBI
-bash scripts/build.sh enabled
+make nemu-build
 # 单独运行，不会触发构建
-bash scripts/run.sh enabled
+make nemu-verify
 
 # 接口缺席回归（本次均已执行），各自独立构建、运行
-bash scripts/build.sh disabled
-bash scripts/run.sh disabled
-bash scripts/build.sh no-csr
-bash scripts/run.sh no-csr
+make nemu-build NEMU_MODE=disabled
+make nemu-verify NEMU_MODE=disabled
+make nemu-build NEMU_MODE=no-csr
+make nemu-verify NEMU_MODE=no-csr
 ```
 
 可通过 `CROSS_COMPILE=riscv64-unknown-elf-` 切换工具链前缀，`JOBS=8` 控制构建并行度，
